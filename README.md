@@ -3,13 +3,11 @@ A folder chooser library for android
 
 A simple folder chooser anyone can integrate into their Android app.
 
--Requires Android v11+ to work.
-
-<table>
-<tr>
-<th>As DialogFragment<br><img src="src/main/res/screenshot/picker_dialog.png" width="40%"></th>
-</tr>
-</table>
+Pros
+- Light weight
+- Doesn't need any layout file. View is created dynamically
+- Data returned using convention used by Android.
+- Requires Android v11+ to work.
 
 #Usage
 
@@ -30,7 +28,7 @@ Request the
 
 2.In Activity/Fragment
 
-Get an instance of the fragment:
+2.1 Get an instance of the fragment:
 
 ```java
 
@@ -41,19 +39,26 @@ fpdf.show(getFragmentManager(), TAG);
 
 ```
 
-Handle the result,
+2.2 Handle the result,
 (Your Acitivity or Fragment must implement OnDialogBtnClickedListener.java)
 ```java
 @Override
 public void onDialogBtnClicked(Intent data, int whichBtn, int result, int requestCode) {
-        switch(requestCode){
-            case REQUEST_CODE_DIR:
-                if(result != Activity.RESULT_OK)
-                    return;
-                //Get the selected folder path through intent
-                String selectedFolderDir = data.getStringExtra(FolderPickerDialogFragment.KEY_CURRENT_DIR);
-                Toast.makeText(getBaseContext(), selectedFolderDir, Toast.LENGTH_LONG).show();
-                break;
-        }
+  switch(requestCode){
+    case REQUEST_CODE_DIR:
+      if(result != Activity.RESULT_OK)
+        return;
+      //Get the selected folder path through intent
+      String selectedFolderDir = data
+                        .getStringExtra(FolderPickerDialogFragment.KEY_CURRENT_DIR);
+      Toast.makeText(getBaseContext(), selectedFolderDir, Toast.LENGTH_LONG).show();
+      break;
     }
+  }
 ```
+
+<table>
+<tr>
+<th>As DialogFragment<br><img src="src/main/res/screenshot/picker_dialog.png" width="30%"></th>
+</tr>
+</table>
