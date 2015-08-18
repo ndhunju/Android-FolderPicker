@@ -11,14 +11,14 @@ A simple folder chooser anyone can integrate into their Android app.
 </tr>
 </table>
 
-## Usage
+#Usage
 
 For a full example see the `SampleActivity` in the
 [repository](https://github.com/ndhunju/Android-FolderPicker/blob/master/src/main/java/ndhunju/com/folderpicker/SampleActivity.java).
 
 To:Do
 
-1.Manifest
+1.In Manifest
 
 Request the
 `android.permission.WRITE_EXTERNAL_STORAGE` permission.
@@ -26,11 +26,11 @@ Request the
 ```xml
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
 
+2.In Activity/Fragment
 
-2.Activity/Fragment
-
-Get an instance of the fragment,
+Get an instance of the fragment:
 
 ```java
 
@@ -38,6 +38,7 @@ Get an instance of the fragment,
 FolderPickerDialogFragment fpdf = FolderPickerDialogFragment
                 .newInstance(INIT_DIRECTORY, REQUEST_CODE_DIR);
 fpdf.show(getFragmentManager(), TAG);
+
 ```
 
 Handle the result,
