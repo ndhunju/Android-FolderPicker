@@ -18,7 +18,7 @@ For a full example see the `SampleActivity` in the
 
 To:Do
 
-1. ### Manifest
+1.Manifest
 
 Request the
 `android.permission.WRITE_EXTERNAL_STORAGE` permission.
@@ -28,14 +28,15 @@ Request the
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
-2. ### Activity/Fragment
+2.Activity/Fragment
 
 Get an instance of the fragment,
 
 ```java
 
 //Show the FolderPickerDialog
-FolderPickerDialogFragment fpdf = FolderPickerDialogFragment.newInstance(INIT_DIRECTORY, REQUEST_CODE_DIR);
+FolderPickerDialogFragment fpdf = FolderPickerDialogFragment
+                .newInstance(INIT_DIRECTORY, REQUEST_CODE_DIR);
 fpdf.show(getFragmentManager(), TAG);
 ```
 
@@ -46,12 +47,12 @@ Handle the result,
 public void onDialogBtnClicked(Intent data, int whichBtn, int result, int requestCode) {
         switch(requestCode){
             case REQUEST_CODE_DIR:
-
                 if(result != Activity.RESULT_OK)
                     return;
                 //Get the selected folder path through intent
                 String selectedFolderDir = data.getStringExtra(FolderPickerDialogFragment.KEY_CURRENT_DIR);
                 Toast.makeText(getBaseContext(), selectedFolderDir, Toast.LENGTH_LONG).show();
+                break;
         }
     }
 ```
