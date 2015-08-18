@@ -7,6 +7,7 @@ Pros
 - Light weight
 - Doesn't need any layout file. View is created dynamically
 - Data returned using convention used by Android.
+- Can be customized to match the theme
 - Requires Android v11+ to work.
 
 #Usage
@@ -28,7 +29,7 @@ Request the
 
 2.In Activity/Fragment
 
-2.1 Get an instance of the fragment:
+- Get an instance of the fragment:
 
 ```java
 
@@ -39,7 +40,7 @@ fpdf.show(getFragmentManager(), TAG);
 
 ```
 
-2.2 Handle the result,
+- Handle the result,
 (Your Acitivity or Fragment must implement OnDialogBtnClickedListener.java)
 ```java
 @Override
