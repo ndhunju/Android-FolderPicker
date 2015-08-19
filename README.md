@@ -1,7 +1,7 @@
 # Android-FolderPicker
 A folder chooser library for android
 
-A simple folder chooser anyone can integrate into their Android app.
+A simple picker chooser anyone can integrate into their Android app.
 
 Pros
 - Light weight
