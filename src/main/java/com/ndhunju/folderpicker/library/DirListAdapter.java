@@ -25,6 +25,7 @@ public class DirListAdapter<String> extends ArrayAdapter<String> {
         View v = super.getView(position, convertView, parent);
         if (v instanceof TextView) {
             TextView tv = (TextView) v;
+            tv.setTextAppearance(getContext(), android.R.style.TextAppearance_DeviceDefault);
             tv.setBackgroundColor(Color.LTGRAY);
             tv.setSingleLine();
             //ellipsize long directories
