@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FolderPicker</string>
+    <string name="msg_choose">Choose %1$s</string>
+    <string name="str_folder">Folder</string>
+    <string name="str_choose">Choose</string>
+    <string name="str_new_folder_name">New Folder Name</string>
+    <string name="str_failed">Failed</string>
+</resources>

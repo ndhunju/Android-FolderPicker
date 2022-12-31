@@ -1,13 +1,13 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 28
+    // each version of the Android Gradle Plugin now has a default version of the build tools.
+    //buildToolsVersion '25.0.3'
 
     defaultConfig {
-        applicationId "com.ndhunju.folderpicker"
-        minSdkVersion 11
-        targetSdkVersion 22
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -21,4 +21,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'androidx.appcompat:appcompat:1.0.0'
 }

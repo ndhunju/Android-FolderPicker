@@ -1,15 +1,30 @@
-package com.ndhunju.folderpicker.library;
+package com.ndhunju.folderpicker;
 
 import android.content.Intent;
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * This an interface needed to pass back data to calling class
  */
 public interface OnDialogBtnClickedListener {
 
-    public final static int BUTTON_POSITIVE = 1;
-    public final static int BUTTON_NEUTRAL = 0;
-    public final static int BUTTON_NEGATIVE = -1;
+    int BUTTON_POSITIVE = 1;
+    int BUTTON_NEUTRAL = 0;
+    int BUTTON_NEGATIVE = -1;
+
+    //Define the list of accepted constants
+    @IntDef({BUTTON_POSITIVE, BUTTON_NEUTRAL, BUTTON_NEGATIVE})
+
+    //Tell the compiler not to store annotation data in the .class file
+    //TODO This way, as opposed to using enum, is it more efficient in terms of memory??
+    @Retention(RetentionPolicy.SOURCE)
+
+    //Declare the ButtonType annotation
+    public @interface ButtonType {}
 
     /**
      * This a callback which can be invoked in a DialogFragment to pass data back to
@@ -19,6 +34,6 @@ public interface OnDialogBtnClickedListener {
      * @param result : was it a success
      * @param requestCode
      */
-    public void onDialogBtnClicked(Intent data, int whichBtn, int result, int requestCode);
+    void onDialogBtnClicked(Intent data,@ButtonType int whichBtn, int result, int requestCode);
 
 }

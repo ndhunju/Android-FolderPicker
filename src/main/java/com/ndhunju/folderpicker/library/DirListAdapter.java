@@ -1,7 +1,8 @@
-package com.ndhunju.folderpicker.library;
+package com.ndhunju.folderpicker;
 
 import android.content.Context;
 import android.graphics.Color;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class DirListAdapter<String> extends ArrayAdapter<String> {
 
-    public DirListAdapter(Context context, List<String> directories) {
+    public DirListAdapter(@NonNull Context context, List<String> directories) {
         super(context,android.R.layout.select_dialog_item, android.R.id.text1, directories);
     }
 
@@ -23,10 +24,10 @@ public class DirListAdapter<String> extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = super.getView(position, convertView, parent);
         if (v instanceof TextView) {
-            //ellipsize long directores
             TextView tv = (TextView) v;
             tv.setBackgroundColor(Color.LTGRAY);
             tv.setSingleLine();
+            //ellipsize long directories
             tv.setEllipsize(TextUtils.TruncateAt.END);
         }
         return v;

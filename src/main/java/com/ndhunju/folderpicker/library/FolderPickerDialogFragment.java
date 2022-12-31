@@ -1,36 +1,38 @@
-package com.ndhunju.folderpicker.library;
+package com.ndhunju.folderpicker;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Created by dhunju on 8/16/2015.
  * This class can be used to let the user
  * pick a folder to save a file. It returns select folder's
  * absolute path via callbacks
  */
-public class FolderPickerDialogFragment extends DialogFragment{
+public class FolderPickerDialogFragment extends DialogFragment {
 
     //Constants
     private static final String KEY_REQUEST_CODE = "keyRequestCode";
     public static final String KEY_CURRENT_DIR = "keyCurrentDirectory";
-    private static final String TAG = FolderPickerDialogFragment.class.getSimpleName();
 
     //Member variables
     private String mCurrentDir="";
@@ -47,8 +49,12 @@ public class FolderPickerDialogFragment extends DialogFragment{
      * @param initAbsoluteDir : Initial directory to show
      * @param requestCode : Result is delivered with the same requestCode
      * @return
+     * @NonNull
      */
-    public static FolderPickerDialogFragment newInstance( String initAbsoluteDir, int requestCode){
+    public static FolderPickerDialogFragment newInstance(
+            @NonNull String initAbsoluteDir,
+            int requestCode
+    ){
         FolderPickerDialogFragment instance = new FolderPickerDialogFragment();
         Bundle args = new Bundle();
         args.putString(KEY_CURRENT_DIR, initAbsoluteDir);
@@ -60,8 +66,16 @@ public class FolderPickerDialogFragment extends DialogFragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        //make sure the calling activity implements the listener
-        try {  mOnDialogBtnPressedListener = (OnDialogBtnClickedListener)activity;
+        //make sure the calling activity or fragment implements the listener
+        try {
+            if(activity instanceof OnDialogBtnClickedListener){
+                mOnDialogBtnPressedListener = (OnDialogBtnClickedListener)activity;
+            }
+            else if(getTargetFragment() instanceof  OnDialogBtnClickedListener){
+                mOnDialogBtnPressedListener = (OnDialogBtnClickedListener)getTargetFragment();
+            }else {
+                throw new ClassCastException();
+            }
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement " +
                     OnDialogBtnClickedListener.class.getSimpleName());
@@ -77,7 +91,7 @@ public class FolderPickerDialogFragment extends DialogFragment{
         mCurrentDir = (initDir != null) ? initDir : mSdcardDir;
 
 
-        //If the passed dir doesn't exist or is not a directory, use the root sdcard directory
+        //If the passed dir doesn't exist or is not a directory, use the root local storage directory
         File dirFile = new File(mCurrentDir);
         if (!dirFile.exists() || !dirFile.isDirectory())
             mCurrentDir = mSdcardDir;
@@ -87,7 +101,7 @@ public class FolderPickerDialogFragment extends DialogFragment{
         headerLayout.setOrientation(LinearLayout.VERTICAL);
 
         TextView title = new TextView(getActivity());
-        title.setText("Choose Folder");
+        title.setText(String.format(getString(R.string.msg_choose), getString(R.string.str_folder)));
         title.setTextAppearance(getActivity(), android.R.style.TextAppearance_DeviceDefault_Widget_ActionBar_Title);
         title.setPadding(15, 15, 15, 15);
 
@@ -116,7 +130,7 @@ public class FolderPickerDialogFragment extends DialogFragment{
                             updateDirectory();
                         }
                     })
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.str_choose), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // Current directory chosen
@@ -144,7 +158,7 @@ public class FolderPickerDialogFragment extends DialogFragment{
      * and likewise for Back Button. Also OnClickListener can be set for buttons
      * @return
      */
-    public ControlsLayout getControlsLayout(Context context){
+    public ControlsLayout getControlsLayout(@NonNull Context context){
         if(mControlsLayout == null)
             mControlsLayout = createDefaultControlLayout(context);
         return mControlsLayout;
@@ -157,7 +171,7 @@ public class FolderPickerDialogFragment extends DialogFragment{
      * @param context
      * @return
      */
-    public ControlsLayout createDefaultControlLayout(Context context){
+    private ControlsLayout createDefaultControlLayout(@NonNull Context context){
         ControlsLayout controlLayout = new ControlsLayout(context);
         controlLayout.setCurrentPath(mCurrentDir);
         controlLayout.setOnBackPressedListener(new View.OnClickListener() {
@@ -178,7 +192,7 @@ public class FolderPickerDialogFragment extends DialogFragment{
 
                 // Show new folder name input dialog
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("New Folder Name")
+                        .setTitle(getString(R.string.str_new_folder_name))
                         .setView(nameInput)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -189,7 +203,7 @@ public class FolderPickerDialogFragment extends DialogFragment{
                                     mCurrentDir += "/" + newDirName;
                                     updateDirectory();
                                 } else {
-                                    Log.d(TAG, "Failed creating new directory ");
+                                    Toast.makeText(getActivity(), getString(R.string.str_failed), Toast.LENGTH_SHORT);
                                 }
                             }
                         }).setNegativeButton(android.R.string.cancel, null).show();
@@ -205,10 +219,9 @@ public class FolderPickerDialogFragment extends DialogFragment{
      * @param newDir
      * @return
      */
-    private boolean createSubDir(String newDir) {
+    private boolean createSubDir(@NonNull String newDir) {
         File newDirFile = new File(newDir);
-        if (!newDirFile.exists()) return newDirFile.mkdir();
-        return false;
+        return !newDirFile.mkdir();
     }
 
     /**
@@ -218,7 +231,7 @@ public class FolderPickerDialogFragment extends DialogFragment{
      * @return
      */
     private List<String> getSubDirectories(String dir) {
-        List<String> dirs = new ArrayList<String>();
+        List<String> dirs = new ArrayList<>();
 
         try {
             File dirFile = new File(dir);

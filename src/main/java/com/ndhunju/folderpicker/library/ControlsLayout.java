@@ -1,10 +1,10 @@
-package com.ndhunju.folderpicker.library;
+package com.ndhunju.folderpicker;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -24,7 +24,7 @@ public class ControlsLayout extends RelativeLayout {
     private TextView mPathTextView;
 
     //Constructor
-    public ControlsLayout(Context context){
+    public ControlsLayout(@NonNull Context context){
         super(context);
 
         mBackImgBtn = new ImageButton(context);
@@ -90,7 +90,7 @@ public class ControlsLayout extends RelativeLayout {
 
     /**
      * This method returns instance of TextView used to display current path.
-     * It can be used to apply custom appearence
+     * It can be used to apply custom appearance
      * @return
      */
     public TextView getPathTextView(){
