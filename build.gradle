@@ -1,4 +1,17 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+buildscript {
+
+    repositories {
+        maven { url 'https://maven.google.com' }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
 
 android {
     compileSdkVersion 33
@@ -6,7 +19,7 @@ android {
     //buildToolsVersion '25.0.3'
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 33
     }
     buildTypes {
