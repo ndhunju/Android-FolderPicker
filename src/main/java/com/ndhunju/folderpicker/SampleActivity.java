@@ -1,4 +1,4 @@
-package ndhunju.com.folderpicker;
+package com.ndhunju.folderpicker;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import ndhunju.com.folderpicker.library.FolderPickerDialogFragment;
-import ndhunju.com.folderpicker.library.OnDialogBtnClickedListener;
+import com.ndhunju.folderpicker.library.FolderPickerDialogFragment;
+import com.ndhunju.folderpicker.library.OnDialogBtnClickedListener;
 
 
 public class SampleActivity extends Activity implements OnDialogBtnClickedListener {

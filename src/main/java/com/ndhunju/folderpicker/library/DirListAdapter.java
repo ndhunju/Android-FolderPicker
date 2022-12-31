@@ -1,4 +1,4 @@
-package ndhunju.com.folderpicker.library;
+package com.ndhunju.folderpicker.library;
 
 import android.content.Context;
 import android.graphics.Color;

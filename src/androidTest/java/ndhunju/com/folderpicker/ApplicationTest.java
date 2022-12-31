@@ -1,4 +1,4 @@
-package ndhunju.com.folderpicker;
+package com.ndhunju.folderpicker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package ndhunju.com.folderpicker;
+package com.ndhunju.folderpicker;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

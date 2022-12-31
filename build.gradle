@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "ndhunju.com.folderpicker"
+        applicationId "com.ndhunju.folderpicker"
         minSdkVersion 11
         targetSdkVersion 22
         versionCode 1

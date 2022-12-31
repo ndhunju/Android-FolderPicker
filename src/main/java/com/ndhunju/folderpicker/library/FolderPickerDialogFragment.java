@@ -1,4 +1,4 @@
-package ndhunju.com.folderpicker.library;
+package com.ndhunju.folderpicker.library;
 
 import android.app.Activity;
 import android.app.AlertDialog;
