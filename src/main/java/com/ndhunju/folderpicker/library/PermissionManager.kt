@@ -1,4 +1,4 @@
-package com.ndhunju.folderpicker
+package com.ndhunju.folderpicker.library
 
 import android.Manifest
 import android.app.Activity

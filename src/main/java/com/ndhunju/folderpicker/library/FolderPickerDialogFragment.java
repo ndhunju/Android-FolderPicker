@@ -30,6 +30,8 @@ import androidx.fragment.app.DialogFragment;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
+import com.ndhunju.folderpicker.library.PermissionManager;
+
 /**
  * Created by dhunju on 8/16/2015.
  * This class can be used to let the user
