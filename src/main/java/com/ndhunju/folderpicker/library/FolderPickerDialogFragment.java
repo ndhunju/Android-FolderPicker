@@ -1,4 +1,4 @@
-package com.ndhunju.folderpicker;
+package com.ndhunju.folderpicker.library;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,7 +30,7 @@ import androidx.fragment.app.DialogFragment;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-import com.ndhunju.folderpicker.library.PermissionManager;
+import com.ndhunju.folderpicker.R;
 
 /**
  * Created by dhunju on 8/16/2015.
@@ -51,9 +51,9 @@ public class FolderPickerDialogFragment extends DialogFragment {
     private String mSdcardDir = "";
     private List<String> mSubDirs ;
     private LinearLayout mainLayout;
-    private com.ndhunju.folderpicker.ControlsLayout mControlsLayout;
+    private ControlsLayout mControlsLayout;
     private ArrayAdapter<String> mDirListAdapter;
-    private com.ndhunju.folderpicker.OnDialogBtnClickedListener mOnDialogBtnPressedListener;
+    private OnDialogBtnClickedListener mOnDialogBtnPressedListener;
 
     /**
      * This method should be called to get a new instance of the class. This assures
@@ -80,17 +80,17 @@ public class FolderPickerDialogFragment extends DialogFragment {
         super.onAttach(context);
         //make sure the calling activity or fragment implements the listener
         try {
-            if (context instanceof com.ndhunju.folderpicker.OnDialogBtnClickedListener) {
-                mOnDialogBtnPressedListener = (com.ndhunju.folderpicker.OnDialogBtnClickedListener) context;
+            if (context instanceof OnDialogBtnClickedListener) {
+                mOnDialogBtnPressedListener = (OnDialogBtnClickedListener) context;
             }
-            else if (getTargetFragment() instanceof com.ndhunju.folderpicker.OnDialogBtnClickedListener) {
-                mOnDialogBtnPressedListener = (com.ndhunju.folderpicker.OnDialogBtnClickedListener) getTargetFragment();
+            else if (getTargetFragment() instanceof OnDialogBtnClickedListener) {
+                mOnDialogBtnPressedListener = (OnDialogBtnClickedListener) getTargetFragment();
             } else {
                 throw new ClassCastException();
             }
         } catch (ClassCastException e) {
             throw new ClassCastException(context + " must implement " +
-                    com.ndhunju.folderpicker.OnDialogBtnClickedListener.class.getSimpleName());
+                    OnDialogBtnClickedListener.class.getSimpleName());
         }
     }
 
@@ -193,7 +193,7 @@ public class FolderPickerDialogFragment extends DialogFragment {
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(KEY_CURRENT_DIR, mCurrentDir);
                 mOnDialogBtnPressedListener.onDialogBtnClicked(resultIntent,
-                        com.ndhunju.folderpicker.OnDialogBtnClickedListener.BUTTON_POSITIVE, Activity.RESULT_OK,
+                        OnDialogBtnClickedListener.BUTTON_POSITIVE, Activity.RESULT_OK,
                         getArguments().getInt(KEY_REQUEST_CODE));
                 dismiss();
             }
@@ -205,7 +205,7 @@ public class FolderPickerDialogFragment extends DialogFragment {
         mSubDirs = getSubDirectories(mCurrentDir);
 
         // Create a ArrayAdapter to display sub directories
-        mDirListAdapter = new com.ndhunju.folderpicker.DirListAdapter<>(parent.getContext(), mSubDirs);
+        mDirListAdapter = new DirListAdapter<>(parent.getContext(), mSubDirs);
         ListView directoryListViw = directoryLayout.getDirectoryListView();
         directoryListViw.setAdapter(mDirListAdapter);
         directoryListViw.setOnItemClickListener((parent1, view, position, id) -> {
@@ -257,7 +257,7 @@ public class FolderPickerDialogFragment extends DialogFragment {
      * {@link ControlsLayout#setNewBtnImg(Drawable)} and likewise for Back Button.
      * Also OnClickListener can be set for buttons
      */
-    public com.ndhunju.folderpicker.ControlsLayout getControlsLayout(@NonNull Context context){
+    public ControlsLayout getControlsLayout(@NonNull Context context){
         return mControlsLayout;
     }
 

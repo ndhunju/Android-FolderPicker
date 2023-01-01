@@ -1,15 +1,18 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 buildscript {
 
     repositories {
         maven { url 'https://maven.google.com' }
         mavenCentral()
+        google()
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20"
     }
 }
 
@@ -34,4 +37,15 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api 'androidx.appcompat:appcompat:1.5.1'
+
+    implementation "androidx.core:core-ktx:1.9.0"
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.annotation:annotation:1.5.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+}
+
+repositories {
+    google()
+    mavenCentral()
 }

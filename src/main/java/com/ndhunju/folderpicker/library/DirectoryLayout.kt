@@ -1,4 +1,4 @@
-package com.ndhunju.folderpicker
+package com.ndhunju.folderpicker.library
 
 import android.content.Context
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -6,6 +6,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
 import android.widget.ListView
 import android.widget.RelativeLayout
+import com.ndhunju.folderpicker.R
 
 /**
  * This view has 3 child views,

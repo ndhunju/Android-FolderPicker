@@ -1,8 +1,7 @@
-package com.ndhunju.folderpicker;
+package com.ndhunju.folderpicker.library;
 
 import android.content.Intent;
 import androidx.annotation.IntDef;
-import androidx.annotation.IntRange;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -32,7 +31,7 @@ public interface OnDialogBtnClickedListener {
      * @param data : data to pass
      * @param whichBtn : button that was clicked
      * @param result : was it a success
-     * @param requestCode
+     * @param requestCode : request code
      */
     void onDialogBtnClicked(Intent data,@ButtonType int whichBtn, int result, int requestCode);
 

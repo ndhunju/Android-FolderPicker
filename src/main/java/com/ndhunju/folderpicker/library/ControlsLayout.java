@@ -1,9 +1,7 @@
-package com.ndhunju.folderpicker;
+package com.ndhunju.folderpicker.library;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -13,6 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import static android.view.ViewGroup.LayoutParams.*;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
+import com.ndhunju.folderpicker.R;
 
 /**
  * ControlsLayout consist of three parts/views
@@ -76,7 +79,7 @@ public class ControlsLayout extends RelativeLayout {
 
     /**
      * This method sets a callback which will be invoked when
-     * {@link com.ndhunju.folderpicker.ControlsLayout#mBackImgBtn} is clicked
+     * {@link com.ndhunju.folderpicker.library.ControlsLayout#mBackImgBtn} is clicked
      */
     public void setOnBackPressedListener(OnClickListener onBackPressedListener) {
         if (onBackPressedListener != null){
@@ -86,7 +89,7 @@ public class ControlsLayout extends RelativeLayout {
 
     /**
      * This method sets a callback which will be called when
-     * {@link com.ndhunju.folderpicker.ControlsLayout#mNewDirImgBtn} is clicked
+     * {@link com.ndhunju.folderpicker.library.ControlsLayout#mNewDirImgBtn} is clicked
      */
     public void setOnNewDirPressedListener(OnClickListener onNewDirPressedListener) {
         if (onNewDirPressedListener != null) {
