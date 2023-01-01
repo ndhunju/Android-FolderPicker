@@ -22,7 +22,7 @@ object PermissionManager {
      * Returns true if the app has permission to manage files in the device
      */
     fun hasManageFilePermission(context: Context): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             return Environment.isExternalStorageManager()
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Check WRITE_EXTERNAL_STORAGE permission for Android OS older than R
@@ -50,7 +50,8 @@ object PermissionManager {
         if (hasManageFilePermission(context)) {
             return true
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 
             // Request manage all files permission at runtime
             val uri = Uri.parse("package:" + context.packageName)
