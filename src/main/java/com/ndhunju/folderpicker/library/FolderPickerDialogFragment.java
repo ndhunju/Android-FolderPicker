@@ -1,24 +1,15 @@
 package com.ndhunju.folderpicker;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.DialogFragment;
-
 import android.view.Gravity;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -32,7 +23,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.DialogFragment;
+
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
@@ -126,7 +121,7 @@ public class FolderPickerDialogFragment extends DialogFragment {
 
         mainLayout.removeAllViews();
 
-        if (checkManageFilePermission()) {
+        if (PermissionManager.INSTANCE.hasManageFilePermission(getActivity())) {
 
             mSdcardDir = Environment.getExternalStorageDirectory().getAbsolutePath();
             // Get the initial directory from intent if provided
@@ -218,6 +213,10 @@ public class FolderPickerDialogFragment extends DialogFragment {
 
     private void addGrantPermissionViewTo(LinearLayout parent) {
 
+        if (getActivity() == null) {
+            return;
+        }
+
         TextView text = new TextView(parent.getContext());
         text.setGravity(Gravity.CENTER);
         text.setText(getString(R.string.msg_permission_manage_file_not_granted));
@@ -236,7 +235,11 @@ public class FolderPickerDialogFragment extends DialogFragment {
         params.setMarginEnd(15);
         button.setLayoutParams(params);
         button.setText(R.string.btn_grant_permission);
-        button.setOnClickListener(v -> askManageFileStoragePermission());
+        button.setOnClickListener(v -> PermissionManager.INSTANCE.askManageFilePermission(
+                this,
+                REQUEST_CODE_MANAGE_FILES_PERMISSIONS,
+                REQUEST_PERMISSIONS_WRITE_STORAGE
+        ));
         parent.addView(button);
 
     }
@@ -290,6 +293,34 @@ public class FolderPickerDialogFragment extends DialogFragment {
         mSubDirs.addAll(getSubDirectories(mCurrentDir));
         mControlsLayout.setCurrentPath(mCurrentDir);
         mDirListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_MANAGE_FILES_PERMISSIONS) {
+            // Although, user granted the permission, resultCode == RESULT_CANCELLED
+            // so can't use result code to check if (resultCode == Activity.RESULT_OK)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                if (Environment.isExternalStorageManager()) {
+                    updateChildViewsInMainLayout();
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            @NonNull String[] permissions,
+            @NonNull int[] grantResults
+    ) {
+        if (requestCode == REQUEST_PERMISSIONS_WRITE_STORAGE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                updateChildViewsInMainLayout();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 }
