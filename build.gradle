@@ -1,6 +1,9 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.kotlin.android'
+
+apply plugin: 'maven-publish'
+group = 'com.github.ndhunju'
 
 buildscript {
 
@@ -25,6 +28,14 @@ android {
         minSdkVersion 17
         targetSdkVersion 33
     }
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
