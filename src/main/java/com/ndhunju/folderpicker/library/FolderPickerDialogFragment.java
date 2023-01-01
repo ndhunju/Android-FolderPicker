@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -155,26 +155,31 @@ public class FolderPickerDialogFragment extends DialogFragment {
         });
 
         mControlsLayout.setOnNewDirPressedListener(view -> {
+
+            LinearLayout linearLayout = new LinearLayout(getActivity());
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setPadding(50, 50, 50, 50);
+
+            TextView titleView = new TextView(getActivity());
+            titleView.setText(getString(R.string.str_new_folder_name));
+            titleView.setTextAppearance(
+                    getActivity(),
+                    android.R.style.TextAppearance_DialogWindowTitle
+            );
+            titleView.getPaint().setFakeBoldText(true);
+            titleView.setTextColor(Color.BLACK);
+            linearLayout.addView(titleView);
+
             final EditText nameInput = new EditText(getActivity());
+            linearLayout.addView(nameInput);
 
             // Show new folder name input dialog
             new AlertDialog.Builder(getActivity())
-                    .setTitle(getString(R.string.str_new_folder_name))
-                    .setView(nameInput)
+                    .setView(linearLayout)
                     .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
                         String newDirName = nameInput.getText().toString();
-                        // Create new directory
-                        if (createSubDir(mCurrentDir + "/" + newDirName)) {
-                            // Navigate into the new directory
-                            mCurrentDir += "/" + newDirName;
-                            updateDirectory();
-                        } else {
-                            Toast.makeText(
-                                    getActivity(),
-                                    getString(R.string.str_failed),
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                        }
+                        createSubDir(mCurrentDir + "/" + newDirName);
+                        updateDirectory();
                     }).setNegativeButton(android.R.string.cancel, null).show();
         });
 
@@ -260,6 +265,7 @@ public class FolderPickerDialogFragment extends DialogFragment {
      */
     private boolean createSubDir(@NonNull String newDir) {
         File newDirFile = new File(newDir);
+        // NOTE: Direction is created even though mkdir() return false below :idk:
         return !newDirFile.mkdir();
     }
 
