@@ -5,8 +5,7 @@
     <string name="str_choose">Choose</string>
     <string name="str_new_folder_name">New Folder Name</string>
     <string name="str_failed">Failed</string>
-    
-    <string name="msg_permission_granted">Thank you for granting the permission. Please try again now.</string>
+
     <string name="msg_permission_manage_file_not_granted">App requires permission to manage files to create files in the device.</string>
     <string name="msg_permission_write_not_granted">App requires write permission to save image in the device.</string>
     <string name="msg_permission_read_not_granted">App requires read permission to show the images that you can add here from your device.</string>
